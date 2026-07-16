@@ -1,0 +1,240 @@
+:root {
+  /* Palette */
+  --bg: #dceef9;
+  --surface: #ffffff;
+  --surface-2: #f4f9fd;
+  --border: #bfdcee;
+  --text: #111827;
+  --text-muted: #4b5b6a;
+  --text-faint: #718096;
+
+  /* Techsavanna blue palette */
+  --primary-blue: #0d47a1;
+  --accent-blue: #1976d2;
+  --light-blue: #e8f2fe;
+  --dark-blue: #092c5c;
+
+  /* Primary accent */
+  --signal: var(--primary-blue);
+  --signal-dim: rgba(13, 71, 161, 0.14);
+
+  /* Alert accent (danger / attention) */
+  --alert: #ff6b4a;
+  --alert-dim: rgba(255, 107, 74, 0.14);
+
+  /* Track accents */
+  --track-air: #4fa8ff;
+  --track-water: var(--accent-blue);
+  --track-health: #ff6b4a;
+
+  /* Type */
+  --font-display: "Poppins", sans-serif;
+  --font-body: "Lato", sans-serif;
+  --font-mono: "Poppins", sans-serif;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--signal);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-blue);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--alert);
+  border-color: rgba(255, 107, 74, 0.35);
+}
+
+.btn-danger:hover {
+  background: var(--alert-dim);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.field input,
+.field textarea,
+.field select {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  color: var(--text);
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--signal);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.alert-banner {
+  background: var(--alert-dim);
+  border: 1px solid rgba(255, 107, 74, 0.4);
+  color: var(--alert);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.success-banner {
+  background: var(--signal-dim);
+  border: 1px solid rgba(13, 71, 161, 0.4);
+  color: var(--signal);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
