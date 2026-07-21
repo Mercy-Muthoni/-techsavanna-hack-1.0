@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 
-const AuthModal = ({ 
+const AuthModalNew = ({ 
   isOpen, 
   onClose, 
   activeTab, 
@@ -42,8 +42,10 @@ const AuthModal = ({
     showToast('Reset link sent to your email (demo)');
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className={modal-bg } id="authModal">
+    <div className="modal-bg open" id="authModal">
       <div className="modal-card">
         <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
         <div className="tab-switch">
@@ -157,4 +159,4 @@ const AuthModal = ({
   );
 };
 
-export default AuthModal;
+export default AuthModalNew;

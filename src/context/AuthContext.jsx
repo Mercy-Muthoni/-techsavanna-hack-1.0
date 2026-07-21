@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+﻿import React, { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
 
@@ -6,10 +6,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = (email) => {
+  const login = (email, name) => {
+    // If name is provided, use it; otherwise extract from email
+    const displayName = name || email.split('@')[0].replace(/\./g, ' ') || 'Participant';
     const newUser = { 
-      name: email.split('@')[0].replace(/\./g, ' ') || 'Participant', 
-      email 
+      name: displayName,
+      email: email 
     };
     setUser(newUser);
     setIsAdmin(email.trim().toLowerCase() === 'admin@techsavanna.tech');
@@ -19,7 +21,6 @@ export const AuthProvider = ({ children }) => {
     const newUser = { name, email };
     setUser(newUser);
     setIsAdmin(false);
-    // You could also save to localStorage or make an API call here
   };
 
   const logout = () => {

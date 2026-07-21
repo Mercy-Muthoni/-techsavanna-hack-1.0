@@ -1,12 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 
 const Portal = ({ 
-  isOpen, 
-  onClose, 
   user, 
   isAdmin, 
-  view, 
-  onViewChange, 
   onLogout,
   myTeam,
   setMyTeam,
@@ -16,7 +12,7 @@ const Portal = ({
   onPostAnnouncement,
   showToast
 }) => {
-  const [activeView, setActiveView] = useState(view || 'overview');
+  const [activeView, setActiveView] = useState('overview');
   const [teamName, setTeamName] = useState('');
   const [teamTrack, setTeamTrack] = useState('Air Quality Monitoring');
   const [joinCode, setJoinCode] = useState('');
@@ -28,15 +24,11 @@ const Portal = ({
   const [annBody, setAnnBody] = useState('');
 
   useEffect(() => {
-    if (view) {
-      setActiveView(view);
+    // If no user, redirect to home
+    if (!user) {
+      window.location.href = '/';
     }
-  }, [view]);
-
-  const handleViewChange = (newView) => {
-    setActiveView(newView);
-    onViewChange(newView);
-  };
+  }, [user]);
 
   const createTeam = () => {
     if (!teamName.trim()) {
@@ -98,52 +90,59 @@ const Portal = ({
     showToast('Announcement published');
   };
 
-  if (!isOpen) return null;
+  if (!user) {
+    return (
+      <div style={{ padding: '50px', textAlign: 'center' }}>
+        <h2>Please log in to access the portal</h2>
+        <a href="/" className="btn btn-primary">Go to Home</a>
+      </div>
+    );
+  }
 
   return (
-    <div id="portal" className="open">
+    <div id="portal" className="open" style={{ paddingTop: '80px', minHeight: '100vh' }}>
       <div className="portal-shell">
         <aside className="portal-nav">
           <button 
             className={activeView === 'overview' ? 'active' : ''} 
-            onClick={() => handleViewChange('overview')}
+            onClick={() => setActiveView('overview')}
           >
             📊 Overview
           </button>
           <button 
             className={activeView === 'profile' ? 'active' : ''} 
-            onClick={() => handleViewChange('profile')}
+            onClick={() => setActiveView('profile')}
           >
             👤 Profile
           </button>
           <button 
             className={activeView === 'team' ? 'active' : ''} 
-            onClick={() => handleViewChange('team')}
+            onClick={() => setActiveView('team')}
           >
             👥 My Team
           </button>
           <button 
             className={activeView === 'projects' ? 'active' : ''} 
-            onClick={() => handleViewChange('projects')}
+            onClick={() => setActiveView('projects')}
           >
             🚀 Project Submission
           </button>
           <button 
             className={activeView === 'leaderboard' ? 'active' : ''} 
-            onClick={() => handleViewChange('leaderboard')}
+            onClick={() => setActiveView('leaderboard')}
           >
             🏆 Leaderboard
           </button>
           <button 
             className={activeView === 'certificate' ? 'active' : ''} 
-            onClick={() => handleViewChange('certificate')}
+            onClick={() => setActiveView('certificate')}
           >
             🎓 Certificate
           </button>
           {isAdmin && (
             <button 
               className={activeView === 'admin' ? 'active' : ''} 
-              onClick={() => handleViewChange('admin')}
+              onClick={() => setActiveView('admin')}
             >
               🛠️ Admin Panel
             </button>

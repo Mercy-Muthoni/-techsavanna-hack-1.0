@@ -1,10 +1,13 @@
 ﻿import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ toggleTheme, isDark, openAuth, toggleDrawer, user, openPortal }) => {
+const Navbar = ({ toggleTheme, isDark, openAuth, toggleDrawer, user }) => {
+  const navigate = useNavigate();
+
   return (
     <nav id="navbar">
       <div className="nav-inner">
-        <a href="#home" className="brand">
+        <a href="/" className="brand">
           <img 
             src="https://careers.techsavanna.technology/logo-dark.png" 
             alt="Techsavanna" 
@@ -12,16 +15,16 @@ const Navbar = ({ toggleTheme, isDark, openAuth, toggleDrawer, user, openPortal 
           />
         </a>
         <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#tracks">Tracks</a>
-          <a href="#schedule">Schedule</a>
-          <a href="#prizes">Prizes</a>
-          <a href="#opportunities">Opportunities</a>
-          <a href="#rules">Rules</a>
-          <a href="#faqs">FAQs</a>
-          <a href="#sponsors">Sponsors</a>
-          <a href="#contact">Contact</a>
+          <a href="/">Home</a>
+          <a href="/#about">About</a>
+          <a href="/#tracks">Tracks</a>
+          <a href="/#schedule">Schedule</a>
+          <a href="/#prizes">Prizes</a>
+          <a href="/#opportunities">Opportunities</a>
+          <a href="/#rules">Rules</a>
+          <a href="/#faqs">FAQs</a>
+          <a href="/#sponsors">Sponsors</a>
+          <a href="/#contact">Contact</a>
         </div>
         <div className="nav-actions">
           <button className="icon-btn" aria-label="Toggle dark mode" onClick={toggleTheme} style={{ width: '32px', height: '32px' }}>
@@ -36,7 +39,7 @@ const Navbar = ({ toggleTheme, isDark, openAuth, toggleDrawer, user, openPortal 
               <button className="btn btn-primary btn-sm" onClick={() => openAuth('register')} style={{ padding: '6px 12px', fontSize: '12px' }}>Register</button>
             </>
           ) : (
-            <button className="btn btn-primary btn-sm" onClick={() => openPortal('overview')} style={{ padding: '6px 12px', fontSize: '12px' }}>My Portal</button>
+            <button className="btn btn-primary btn-sm" onClick={() => navigate('/portal')} style={{ padding: '6px 12px', fontSize: '12px' }}>My Portal</button>
           )}
           <button className="icon-btn" id="hamburger" aria-label="Open menu" onClick={() => toggleDrawer(true)} style={{ width: '32px', height: '32px' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

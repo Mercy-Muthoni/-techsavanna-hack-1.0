@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import { useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
@@ -14,19 +15,18 @@ import FAQs from './components/FAQs';
 import Sponsors from './components/Sponsors';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AuthModal from './components/AuthModal';
+import AuthModalNew from './components/AuthModalNew';
 import Portal from './components/Portal';
 import Toast from './components/Toast';
 
 const App = () => {
   const { user, isAdmin, login, logout } = useAuth();
+  const navigate = useNavigate();
   
   const [isDark, setIsDark] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState('login');
-  const [portalOpen, setPortalOpen] = useState(false);
-  const [portalView, setPortalView] = useState('overview');
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [myTeam, setMyTeam] = useState(null);
@@ -53,35 +53,32 @@ const App = () => {
 
   const toggleTheme = () => setIsDark(!isDark);
   const toggleDrawer = (open) => setMobileDrawerOpen(open);
+  
   const openAuth = (tab) => {
     setAuthModalOpen(true);
     setAuthTab(tab || 'login');
   };
+  
   const closeAuth = () => setAuthModalOpen(false);
-  const openPortal = (view) => {
-    setPortalOpen(true);
-    setPortalView(view || 'overview');
-  };
-  const closePortal = () => setPortalOpen(false);
 
   const handleLogin = (email) => {
     login(email);
     closeAuth();
-    showToastMessage('Logged in as ' + email);
-    openPortal(isAdmin ? 'admin' : 'overview');
+    showToastMessage('✅ Logged in as ' + email);
+    navigate('/portal');
   };
 
   const handleRegister = (name, email) => {
-    login(email);
+    login(email, name);
     closeAuth();
-    showToastMessage('Account created');
-    openPortal('overview');
+    showToastMessage('✅ Account created! Welcome ' + name);
+    navigate('/portal');
   };
 
   const handleLogout = () => {
     logout();
-    setPortalOpen(false);
     showToastMessage('Logged out');
+    navigate('/');
   };
 
   const updateAnnouncements = (newAnnouncement) => {
@@ -96,47 +93,50 @@ const App = () => {
         openAuth={openAuth}
         toggleDrawer={toggleDrawer}
         user={user}
-        openPortal={openPortal}
       />
       
       <MobileDrawer isOpen={mobileDrawerOpen} toggleDrawer={toggleDrawer} />
 
-      <Home openAuth={openAuth} />
-      <About />
-      <Tracks />
-      <Schedule />
-      <Prizes />
-      <Opportunities />
-      <Rules />
-      <FAQs />
-      <Sponsors />
-      <Contact showToast={showToastMessage} />
-      <Footer openAuth={openAuth} openPortal={openPortal} />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Home openAuth={openAuth} />
+            <About />
+            <Tracks />
+            <Schedule />
+            <Prizes />
+            <Opportunities />
+            <Rules />
+            <FAQs />
+            <Sponsors />
+            <Contact showToast={showToastMessage} />
+            <Footer openAuth={openAuth} />
+          </>
+        } />
+        
+        <Route path="/portal" element={
+          <Portal 
+            user={user}
+            isAdmin={isAdmin}
+            onLogout={handleLogout}
+            myTeam={myTeam}
+            setMyTeam={setMyTeam}
+            projectSubmitted={projectSubmitted}
+            setProjectSubmitted={setProjectSubmitted}
+            announcements={announcements}
+            onPostAnnouncement={updateAnnouncements}
+            showToast={showToastMessage}
+          />
+        } />
+      </Routes>
 
-      <AuthModal 
+      <AuthModalNew 
         isOpen={authModalOpen}
         onClose={closeAuth}
         activeTab={authTab}
         onTabChange={setAuthTab}
         onLogin={handleLogin}
         onRegister={handleRegister}
-        showToast={showToastMessage}
-      />
-
-      <Portal 
-        isOpen={portalOpen}
-        onClose={closePortal}
-        user={user}
-        isAdmin={isAdmin}
-        view={portalView}
-        onViewChange={setPortalView}
-        onLogout={handleLogout}
-        myTeam={myTeam}
-        setMyTeam={setMyTeam}
-        projectSubmitted={projectSubmitted}
-        setProjectSubmitted={setProjectSubmitted}
-        announcements={announcements}
-        onPostAnnouncement={updateAnnouncements}
         showToast={showToastMessage}
       />
 

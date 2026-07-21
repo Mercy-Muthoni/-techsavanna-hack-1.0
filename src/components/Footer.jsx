@@ -1,6 +1,9 @@
 ﻿import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Footer = ({ openAuth, openPortal }) => {
+const Footer = ({ openAuth }) => {
+  const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
     openAuth('register');
@@ -11,9 +14,9 @@ const Footer = ({ openAuth, openPortal }) => {
     openAuth('login');
   };
 
-  const handleAdmin = (e) => {
+  const handlePortal = (e) => {
     e.preventDefault();
-    openPortal('admin');
+    navigate('/portal');
   };
 
   return (
@@ -33,23 +36,22 @@ const Footer = ({ openAuth, openPortal }) => {
         </div>
         <div>
           <h4>Event</h4>
-          <a href="#about">About</a>
-          <a href="#tracks">Tracks</a>
-          <a href="#schedule">Schedule</a>
-          <a href="#prizes">Prizes</a>
+          <a href="/#about">About</a>
+          <a href="/#tracks">Tracks</a>
+          <a href="/#schedule">Schedule</a>
+          <a href="/#prizes">Prizes</a>
         </div>
         <div>
           <h4>Info</h4>
-          <a href="#rules">Rules</a>
-          <a href="#faqs">FAQs</a>
-          <a href="#sponsors">Sponsors</a>
-          <a href="#mentors">Mentors</a>
+          <a href="/#rules">Rules</a>
+          <a href="/#faqs">FAQs</a>
+          <a href="/#sponsors">Sponsors</a>
         </div>
         <div>
           <h4>Portal</h4>
           <a href="#" onClick={handleRegister}>Register</a>
           <a href="#" onClick={handleLogin}>Log in</a>
-          <a href="#" onClick={handleAdmin}>Admin</a>
+          <a href="#" onClick={handlePortal}>My Portal</a>
         </div>
       </div>
       <div className="wrap foot-bottom">
